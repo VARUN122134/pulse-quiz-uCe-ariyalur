@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+<meta name="robots" content="noindex, nofollow" />
+<title>Quiz Host Control • PULSE</title>
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<div class="phone">
+<header>
+  <img src="assets/logo.jpeg" alt="PULSE logo" />
+  <div><b>Host Control</b><small>PULSE Quiz • coordinator only</small></div>
+  <a href="index.html" style="background:#C9973B;border-radius:10px;padding:8px 12px;text-decoration:none">🏠</a>
+</header>
+
+<div class="view on">
+  <p class="mut">⚠ Do not share this page link. Anyone with this link can start / pause / end the quiz. No password set.</p>
+  <p class="mut" id="adm-err"></p>
+
+  <h2>🎓 Students</h2>
+  <div class="info">Status: <b id="st-student">…</b> • Attempts: <b id="ct-student">…</b></div>
+  <div class="ctl">
+    <button id="a-student-live" type="button" class="live">▶ Start</button>
+    <button id="a-student-paused" type="button" class="pause">⏸ Pause</button>
+    <button id="a-student-ended" type="button" class="end">⏹ End</button>
+  </div>
+
+  <h2>👩‍🏫 Faculty</h2>
+  <div class="info">Status: <b id="st-faculty">…</b> • Attempts: <b id="ct-faculty">…</b></div>
+  <div class="ctl">
+    <button id="a-faculty-live" type="button" class="live">▶ Start</button>
+    <button id="a-faculty-paused" type="button" class="pause">⏸ Pause</button>
+    <button id="a-faculty-ended" type="button" class="end">⏹ End</button>
+  </div>
+
+  <button class="big" id="adm-refresh" type="button">↻ Refresh status</button>
+  <p class="mut">waiting = students see "not started" • live = quiz open • paused = timers freeze + no new starts • ended = closed, leaderboard final. Refreshes every 5s.</p>
+</div>
+<footer>PULSE • Host Control</footer>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="admin.js"></script>
+</body>
+</html>

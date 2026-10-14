@@ -39,6 +39,13 @@ input,select{display:block;width:100%;margin-top:6px;padding:14px;border-radius:
 .rank{display:flex;justify-content:space-between;background:#fff;border:1px solid #eee;border-radius:10px;padding:10px;margin:6px 0;font-size:14px}.rev{border:1px solid #eee;border-left:6px solid #999;border-radius:10px;padding:10px;margin:8px 0;background:#fff;font-size:14px}
 .rev.ok{border-left-color:green}.rev.no{border-left-color:red}
 footer{text-align:center;font-size:12px;color:#6b7686;padding:14px;margin-top:auto}
+.paused{background:#0A2342;color:#fff;border-radius:14px;padding:22px;text-align:center;font-size:17px;margin-top:14px;line-height:1.6}
+.ctl{display:flex;gap:8px;margin:8px 0}
+.ctl button{flex:1;padding:14px;border-radius:12px;border:2px solid #0A2342;background:#fff;font-weight:800;font-size:15px}
+.ctl button.live{background:#0f7a3d;border-color:#0f7a3d;color:#fff}
+.ctl button.pause{background:#b7791f;border-color:#b7791f;color:#fff}
+.ctl button.end{background:#b4232a;border-color:#b4232a;color:#fff}
+.ctl button.cur{outline:3px solid #C9973B}
 .about{display:flex;gap:12px;background:#fff;border:1px solid #e0d5b8;border-radius:16px;padding:14px;margin-top:18px;align-items:center}
 .about-photo{width:76px;height:76px;border-radius:50%;object-fit:cover;border:3px solid #C9973B;flex-shrink:0;background:#eee}
 .about-body{display:flex;flex-direction:column;gap:4px;min-width:0}

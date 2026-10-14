@@ -19,7 +19,8 @@
   <img class="poster" src="assets/poster.jpeg" alt="Students Day poster" />
   <h1>World Students' Day Quiz</h1>
   <p class="q">"Dream is not what you see in sleep, dream is what keeps you awake." — <b>Dr. Kalam</b></p>
-  <div class="info">📝 25 questions • 1 mark each • Total 25<br>⏱ 15 min timer • 1 attempt per Reg No</div>
+  <div class="info">📝 25 questions • 1 mark each • Total 25<br>⏱ 15 min timer • 1 attempt per Reg No<br>🔀 Questions shuffle for each person</div>
+  <p class="mut" id="control-line"></p>
   <button class="big primary" id="btn-student" type="button">🎓 I am a Student</button>
   <button class="big" id="btn-faculty" type="button">👩‍🏫 I am Faculty / Staff</button>
   <button class="link" id="btn-board1" type="button">View leaderboard →</button>
@@ -45,6 +46,7 @@
   <button class="link" data-go="home" type="button">← Back</button>
   <h2 id="reg-title">Student details</h2>
   <p class="mut" id="reg-sub">No login needed.</p>
+  <p class="mut" id="gate-msg"></p>
   <label>Name *<input id="f-name" maxlength="80" placeholder="Your full name" autocomplete="name" /></label>
   <label>Department *<select id="f-dept">
     <option value="">Select…</option><option>CSE</option><option>ECE</option><option>EEE</option>
@@ -69,6 +71,7 @@
     <button id="q-next" type="button" class="primary">Next →</button>
   </div>
   <button class="big primary" id="q-submit" type="button">Submit ✓</button>
+  <div id="pause-overlay" style="display:none" class="paused">⏸ <b>Paused by coordinator</b><br>Wait… your timer is frozen. Do not close this page.</div>
 </div>
 
 <!-- RESULT -->
@@ -86,7 +89,7 @@
 <div id="view-leaderboard" class="view">
   <button class="link" data-go="home" type="button">← Back</button>
   <h2>🏆 Leaderboard</h2>
-  <p class="mut">Students only • Top 3 win • Same score? Faster finish ranks higher ⏱</p>
+  <p class="mut">Students only • Top 3 win • Same score? Slower finish ranks higher ⏱</p>
   <button id="lb-refresh" type="button">↻ Refresh</button>
   <span id="lb-count" class="mut"></span>
   <div id="lb-podium"></div>

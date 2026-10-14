@@ -44,6 +44,61 @@ var role = "student", current = 0, answers = [], timerId = null, timeLeft = QUIZ
 function blank() { answers = []; for (var i = 0; i < QUESTIONS.length; i++) answers.push(null); }
 blank();
 
+// Per-participant shuffle: questions + options (rebuilt every attempt).
+var DECK = null;
+function shuffleArr(a) {
+  for (var i = a.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var t = a[i]; a[i] = a[j]; a[j] = t;
+  }
+  return a;
+}
+function buildDeck() {
+  var qi = shuffleArr(QUESTIONS.map(function (_, i) { return i; }));
+  DECK = qi.map(function (orig) {
+    var Q = QUESTIONS[orig];
+    var oi = shuffleArr(Q.o.map(function (_, i) { return i; }));
+    return { q: Q.q, o: oi.map(function (i) { return Q.o[i]; }), a: oi.indexOf(Q.a), src: orig };
+  });
+}
+
+// Host control (start/pause/end per role). Offline => allow play.
+var control = { student: "live", faculty: "live" };
+var inQuiz = false, frozen = false;
+function fetchControl() {
+  if (!sb) return;
+  sb.from("quiz_control").select("role,status").then(function (res) {
+    if (res.error || !res.data) return;
+    res.data.forEach(function (r) { control[r.role] = r.status; });
+    paintControl();
+    enforceControl();
+  });
+}
+function controlMsg(s) {
+  if (s === "live") return null;
+  if (s === "waiting") return "⏳ Quiz not started yet — wait for the coordinator.";
+  if (s === "paused") return "⏸ Quiz is paused by the coordinator — wait...";
+  return "⏹ Quiz has ended — see the leaderboard.";
+}
+function paintControl() {
+  var el = $("control-line");
+  if (el) el.textContent = "🎓 Students: " + control.student.toUpperCase() + "  •  👩‍🏫 Faculty: " + control.faculty.toUpperCase();
+}
+function enforceControl() {
+  if (!inQuiz || !profile) return;
+  var s = control[profile.role];
+  if (s === "paused" && !frozen) {
+    frozen = true; clearInterval(timerId);
+    $("pause-overlay").style.display = "block";
+  } else if (s === "live" && frozen) {
+    frozen = false;
+    $("pause-overlay").style.display = "none";
+    startTimer();
+  } else if (s === "ended" && !frozen) {
+    submitQuiz(false);
+  }
+}
+
 function go(v) {
   var vs = ["home", "register", "quiz", "result", "leaderboard"];
   for (var i = 0; i < vs.length; i++) $("view-" + vs[i]).classList.toggle("on", vs[i] === v);
@@ -59,11 +114,15 @@ function openReg(r) {
   $("year-wrap").style.display = r === "student" ? "" : "none";
   $("reg-wrap").style.display = r === "student" ? "" : "none";
   $("reg-err").textContent = "";
+  var gm = $("gate-msg");
+  if (gm) { var b = controlMsg(control[r]); gm.textContent = b || "✅ Quiz is LIVE — fill & start!"; }
   go("register");
 }
 
 function startQuiz() {
-  current = 0; blank(); timeLeft = QUIZ_SECS; startStamp = Date.now();
+  current = 0; blank(); buildDeck(); timeLeft = QUIZ_SECS; startStamp = Date.now();
+  inQuiz = true; frozen = false;
+  $("pause-overlay").style.display = "none";
   go("quiz"); renderQ(); startTimer();
 }
 function startTimer() {
@@ -78,7 +137,7 @@ function tick() {
   timeLeft--;
 }
 function renderQ() {
-  var Q = QUESTIONS[current];
+  var Q = (DECK || QUESTIONS)[current];
   $("q-progress-text").textContent = "Question " + (current + 1) + " of " + QUESTIONS.length;
   $("q-bar").style.width = ((current + 1) / QUESTIONS.length * 100) + "%";
   $("q-text").textContent = "Q" + (current + 1) + ". " + Q.q;
@@ -97,8 +156,11 @@ function renderQ() {
 
 function submitQuiz(auto) {
   clearInterval(timerId);
+  inQuiz = false; frozen = false;
+  $("pause-overlay").style.display = "none";
+  var D = DECK || QUESTIONS;
   var correct = 0, i;
-  for (i = 0; i < QUESTIONS.length; i++) if (answers[i] === QUESTIONS[i].a) correct++;
+  for (i = 0; i < D.length; i++) if (answers[i] === D[i].a) correct++;
   var score = correct * POINTS;
   var taken = Math.min(QUIZ_SECS, Math.floor((Date.now() - startStamp) / 1000));
   save(score, taken, function (saveErr) {
@@ -109,7 +171,7 @@ function submitQuiz(auto) {
 
 function save(score, taken, cb) {
   if (!sb) { cb("offline (no internet) — showing local score"); return; }
-  var payload = { role: profile.role, name: profile.name, dept: profile.dept, year: profile.year, reg_number: profile.reg_number, score: score, total: TOTAL, time_taken_secs: taken, answers: answers };
+  var payload = { role: profile.role, name: profile.name, dept: profile.dept, year: profile.year, reg_number: profile.reg_number, score: score, total: TOTAL, time_taken_secs: taken, answers: { v: 2, order: (DECK || []).map(function (d) { return d.src; }), answers: answers } };
   sb.from("quiz_attempts").insert(payload).then(function (res) {
     if (res.error) {
       if ((res.error.message || "").toLowerCase().indexOf("duplicate") >= 0) cb("this Reg No already submitted once");
@@ -127,7 +189,7 @@ function showResult(correct, score, taken, auto) {
   $("r-time").textContent = fmt(taken);
   var rev = $("r-review"); rev.innerHTML = "";
   var L = ["A", "B", "C", "D"];
-  QUESTIONS.forEach(function (Q, i) {
+  (DECK || QUESTIONS).forEach(function (Q, i) {
     var ok = answers[i] === Q.a;
     var d = document.createElement("div");
     d.className = "rev " + (ok ? "ok" : "no");
@@ -140,13 +202,13 @@ function showResult(correct, score, taken, auto) {
 
 function medal(i) { return i === 0 ? "🥇" : i === 1 ? "🥈" : "🥉"; }
 
-// Sort: score DESC, then time ASC (faster wins ties), null times last.
+// Sort: score DESC, then time DESC (slower finisher wins ties), null times last.
 function sortBoard(data) {
   return (data || []).slice().sort(function (x, y) {
     if (y.score !== x.score) return y.score - x.score;
-    var xt = (x.time_taken_secs == null ? 99999 : x.time_taken_secs);
-    var yt = (y.time_taken_secs == null ? 99999 : y.time_taken_secs);
-    return xt - yt;
+    var xt = (x.time_taken_secs == null ? -1 : x.time_taken_secs);
+    var yt = (y.time_taken_secs == null ? -1 : y.time_taken_secs);
+    return yt - xt;
   });
 }
 // Tie-aware rank: same score + same time => same rank number.
@@ -186,7 +248,7 @@ function loadTop3() {
     if (!local.length) el.innerHTML = '<p class="mut">Offline mode — scores save on this phone only.</p>';
     return;
   }
-  sb.from("quiz_attempts").select("name,dept,score,time_taken_secs").eq("role", "student").order("score", { ascending: false }).order("time_taken_secs", { ascending: true, nullsFirst: false }).order("created_at", { ascending: true }).limit(3)
+  sb.from("quiz_attempts").select("name,dept,score,time_taken_secs").eq("role", "student").order("score", { ascending: false }).order("time_taken_secs", { ascending: false, nullsFirst: false }).order("created_at", { ascending: true }).limit(3)
     .then(function (res) {
       if (res.error) { el.innerHTML = '<p class="mut">Offline — check internet.</p>'; return; }
       boardRows(res.data || [], el, false);
@@ -204,7 +266,7 @@ function loadBoard() {
     boardRows(local, pod, false); boardRows(local, list, true);
     return;
   }
-  sb.from("quiz_attempts").select("name,dept,year,reg_number,score,time_taken_secs,created_at").eq("role", "student").order("score", { ascending: false }).order("time_taken_secs", { ascending: true, nullsFirst: false }).order("created_at", { ascending: true }).limit(100)
+  sb.from("quiz_attempts").select("name,dept,year,reg_number,score,time_taken_secs,created_at").eq("role", "student").order("score", { ascending: false }).order("time_taken_secs", { ascending: false, nullsFirst: false }).order("created_at", { ascending: true }).limit(100)
     .then(function (res) {
       if (res.error) { pod.innerHTML = '<p class="mut">Failed: ' + esc(res.error.message) + "</p>"; return; }
       var data = res.data || [];
@@ -228,6 +290,10 @@ document.addEventListener("DOMContentLoaded", function () {
     var name = $("f-name").value.trim(), dept = $("f-dept").value;
     var year = $("f-year").value, reg = $("f-reg").value.trim().toUpperCase().replace(/\s+/g, "");
     if (!name || !dept || (role === "student" && (!year || !reg))) { err.textContent = "Please fill all * fields."; return; }
+    if (sb) {
+      var block = controlMsg(control[role]);
+      if (block) { err.textContent = block; return; }
+    }
     err.textContent = "";
     $("reg-submit").textContent = "Checking…"; $("reg-submit").disabled = true;
     var done = function () {
@@ -266,4 +332,6 @@ document.addEventListener("DOMContentLoaded", function () {
   };
 
   loadTop3();
+  fetchControl();
+  setInterval(fetchControl, 10000);
 });
