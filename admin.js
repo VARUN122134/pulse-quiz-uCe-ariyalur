@@ -31,6 +31,21 @@ function refresh() {
       if (!res.error) $("ct-" + r).textContent = res.count;
     });
   });
+  // Secret faculty scores — host only, never rendered on the public site.
+  sb.from("quiz_attempts").select("name,dept,score,time_taken_secs,created_at").eq("role", "faculty").order("score", { ascending: false }).order("time_taken_secs", { ascending: false, nullsFirst: false }).limit(100).then(function (res) {
+    var el = $("fac-list");
+    if (res.error) { el.innerHTML = '<p class="mut">Failed: ' + res.error.message + "</p>"; return; }
+    var data = res.data || [];
+    if (!data.length) { el.innerHTML = '<p class="mut">No faculty attempts yet.</p>'; return; }
+    el.innerHTML = "";
+    data.forEach(function (r, i) {
+      var t = r.time_taken_secs == null ? "—" : Math.floor(r.time_taken_secs / 60) + ":" + String(r.time_taken_secs % 60).padStart(2, "0");
+      var d = document.createElement("div");
+      d.className = "rank";
+      d.textContent = (i + 1) + ". " + r.name + " (" + r.dept + ") — " + r.score + " / 25 • ⏱ " + t;
+      el.appendChild(d);
+    });
+  });
 }
 
 function setStatus(role, status) {
