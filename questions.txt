@@ -1,0 +1,274 @@
+# College Students’ Day Quiz Website — Question Bank
+
+**Total Questions:** 25  
+**Question Type:** Multiple Choice (MCQ)  
+**Options:** A, B, C, D  
+**Scoring:** 10 points for each correct answer, 0 points for an incorrect answer  
+**Maximum Score:** 250 points
+
+## Part 1: Common Engineering, Science, Technology and Logical Thinking
+
+### Question 1
+**Question:** Which of the following is the SI unit of power?
+
+A. Joule  
+B. Watt  
+C. Newton  
+D. Pascal
+
+**Correct Answer:** B. Watt
+
+### Question 2
+**Question:** Which device converts electrical energy into mechanical energy?
+
+A. Generator  
+B. Electric motor  
+C. Transformer  
+D. Battery
+
+**Correct Answer:** B. Electric motor
+
+### Question 3
+**Question:** What is the approximate speed of light in a vacuum?
+
+A. 3 × 10⁶ m/s  
+B. 3 × 10⁸ m/s  
+C. 3 × 10⁵ m/s  
+D. 3 × 10¹⁰ m/s
+
+**Correct Answer:** B. 3 × 10⁸ m/s
+
+### Question 4
+**Question:** Which gas is most abundant in Earth's atmosphere?
+
+A. Oxygen  
+B. Carbon dioxide  
+C. Nitrogen  
+D. Hydrogen
+
+**Correct Answer:** C. Nitrogen
+
+### Question 5
+**Question:** Which simple machine is commonly used to raise a flag on a flagpole?
+
+A. Lever  
+B. Pulley  
+C. Wedge  
+D. Screw
+
+**Correct Answer:** B. Pulley
+
+### Question 6
+**Question:** What does CPU stand for?
+
+A. Central Processing Unit  
+B. Computer Power Unit  
+C. Central Program Utility  
+D. Control Processing Unit
+
+**Correct Answer:** A. Central Processing Unit
+
+### Question 7
+**Question:** Which decimal number is represented by the binary number 1010?
+
+A. 8  
+B. 10  
+C. 12  
+D. 14
+
+**Correct Answer:** B. 10
+
+### Question 8
+**Question:** Which of these materials is a good electrical conductor?
+
+A. Rubber  
+B. Glass  
+C. Copper  
+D. Wood
+
+**Correct Answer:** C. Copper
+
+### Question 9
+**Question:** What is the main purpose of a fuse in an electrical circuit?
+
+A. Increase current  
+B. Protect against excessive current  
+C. Store electrical energy  
+D. Reduce frequency
+
+**Correct Answer:** B. Protect against excessive current
+
+### Question 10
+**Question:** Which renewable energy source uses sunlight directly?
+
+A. Geothermal energy  
+B. Solar energy  
+C. Tidal energy  
+D. Wind energy
+
+**Correct Answer:** B. Solar energy
+
+### Question 11
+**Question:** What is the value of 2³?
+
+A. 6  
+B. 8  
+C. 9  
+D. 12
+
+**Correct Answer:** B. 8
+
+### Question 12
+**Question:** A vehicle travels 150 km in 3 hours. What is its average speed?
+
+A. 30 km/h  
+B. 45 km/h  
+C. 50 km/h  
+D. 60 km/h
+
+**Correct Answer:** C. 50 km/h
+
+### Question 13
+**Question:** Which instrument is used to measure temperature?
+
+A. Barometer  
+B. Thermometer  
+C. Ammeter  
+D. Speedometer
+
+**Correct Answer:** B. Thermometer
+
+### Question 14
+**Question:** Which law is represented by the equation V = IR?
+
+A. Newton's law  
+B. Ohm's law  
+C. Faraday's law  
+D. Hooke's law
+
+**Correct Answer:** B. Ohm's law
+
+### Question 15
+**Question:** Which of these is an example of artificial intelligence?
+
+A. A traditional wall clock  
+B. A manual switch  
+C. A voice assistant that understands questions  
+D. A metal ruler
+
+**Correct Answer:** C. A voice assistant that understands questions
+
+### Question 16
+**Question:** What does GPS help us determine?
+
+A. Blood pressure  
+B. Geographical location  
+C. Electrical resistance  
+D. Temperature only
+
+**Correct Answer:** B. Geographical location
+
+### Question 17
+**Question:** Which component stores electrical energy in an electric field?
+
+A. Capacitor  
+B. Resistor  
+C. Fuse  
+D. Switch
+
+**Correct Answer:** A. Capacitor
+
+### Question 18
+**Question:** What is the chemical formula of water?
+
+A. CO₂  
+B. O₂  
+C. H₂O  
+D. NaCl
+
+**Correct Answer:** C. H₂O
+
+### Question 19
+**Question:** Which force keeps planets in orbit around the Sun?
+
+A. Friction  
+B. Magnetism only  
+C. Gravity  
+D. Buoyancy
+
+**Correct Answer:** C. Gravity
+
+### Question 20
+**Question:** If 5 machines make 5 products in 5 minutes, how long will 100 identical machines take to make 100 products at the same rate?
+
+A. 5 minutes  
+B. 20 minutes  
+C. 100 minutes  
+D. 500 minutes
+
+**Correct Answer:** A. 5 minutes
+
+## Part 2: Dr. A. P. J. Abdul Kalam — Special Round
+
+### Question 21
+**Question:** On which date was Dr. A. P. J. Abdul Kalam born?
+
+A. 15 October 1931  
+B. 15 August 1931  
+C. 2 October 1931  
+D. 26 January 1931
+
+**Correct Answer:** A. 15 October 1931
+
+### Question 22
+**Question:** What is Dr. Kalam popularly known as?
+
+A. Iron Man of India  
+B. Missile Man of India  
+C. Father of the White Revolution  
+D. Metro Man of India
+
+**Correct Answer:** B. Missile Man of India
+
+### Question 23
+**Question:** In which year did Dr. Kalam become the President of India?
+
+A. 1997  
+B. 2000  
+C. 2002  
+D. 2007
+
+**Correct Answer:** C. 2002
+
+### Question 24
+**Question:** What is the title of Dr. Kalam's autobiography?
+
+A. Ignited Minds  
+B. Wings of Fire  
+C. India 2020  
+D. The Discovery of India
+
+**Correct Answer:** B. Wings of Fire
+
+### Question 25
+**Question:** Which Indian organisation did Dr. Kalam work with on space and launch vehicle programmes?
+
+A. ISRO  
+B. RBI  
+C. SEBI  
+D. NITI Aayog
+
+**Correct Answer:** A. ISRO
+
+## Website Logic Requirements
+
+1. Display one question at a time with four selectable options.
+2. Allow participants to select one answer per question.
+3. Provide Next and Previous navigation buttons.
+4. Show a progress indicator, such as “Question 5 of 25”.
+5. Award 1 points for each correct answer.
+6. Do not award points for incorrect answers.
+7. After submission, display the participant's total score out of 250.
+8. Display the correct answer for each question on the results screen.
+9. Keep the correct answers hidden while the quiz is in progress.
+10. Use a responsive, attractive college-event design suitable for desktop and mobile screens.

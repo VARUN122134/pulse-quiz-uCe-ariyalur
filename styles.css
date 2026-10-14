@@ -1,0 +1,42 @@
+/* Mobile-first simple quiz. Max width 480px, big touch targets. */
+*{box-sizing:border-box}
+body{margin:0;background:#f4efe3;font-family:system-ui,-apple-system,Roboto,Arial,sans-serif;color:#1c2530}
+.phone{max-width:480px;margin:0 auto;background:#fffdf6;min-height:100vh;display:flex;flex-direction:column}
+header{display:flex;gap:10px;align-items:center;background:#0A2342;color:#fff;padding:10px 12px;position:sticky;top:0}
+header img{width:44px;height:44px;border-radius:10px;background:#fff;object-fit:cover}
+header div{flex:1;display:flex;flex-direction:column}
+header small{opacity:.8;font-size:11px}
+header button{background:#C9973B;border:0;border-radius:10px;font-size:20px;padding:8px 12px}
+.view{display:none;padding:14px 14px 30px}
+.view.on{display:block}
+.poster{width:100%;border-radius:14px;border:2px solid #C9973B}
+h1{font-size:26px;margin:12px 0 4px;color:#0A2342}
+h2{color:#0A2342;margin:8px 0} h3{margin:16px 0 8px}
+.q{border-left:4px solid #C9973B;padding-left:10px;color:#0A2342;font-size:14px}
+.info{background:#eef3ff;border-radius:12px;padding:10px;font-size:14px;margin:10px 0}
+.big{display:block;width:100%;border:2px solid #0A2342;background:#fff;color:#0A2342;border-radius:14px;padding:16px;font-size:17px;font-weight:800;margin:10px 0}
+.big.primary{background:#7B1E2B;border-color:#7B1E2B;color:#fff}
+.link{background:none;border:0;color:#0A2342;font-weight:800;text-decoration:underline;padding:10px 0;font-size:15px}
+label{display:block;font-weight:700;font-size:14px;margin:10px 0}
+input,select{display:block;width:100%;margin-top:6px;padding:14px;border-radius:12px;border:2px solid #ccc;font-size:16px;background:#fff}
+.err{color:#b4232a;font-weight:700;min-height:20px}
+.qbar{display:flex;justify-content:space-between;font-weight:800;color:#0A2342}
+#q-timer{background:#0A2342;color:#fff;border-radius:10px;padding:4px 12px}
+#q-timer.low{background:#b4232a}
+.track{height:8px;background:#eee;border-radius:99px;margin:8px 0;overflow:hidden}
+#q-bar{height:100%;width:4%;background:#7B1E2B}
+.qq{font-size:18px;font-weight:700}
+#q-opts{display:grid;gap:10px;margin:10px 0}
+.opt{border:2px solid #ddd;border-radius:12px;padding:14px;font-size:16px;background:#fff}
+.opt.sel{border-color:#0A2342;background:#eef3ff;font-weight:800}
+.qn{display:flex;gap:10px}
+.qn button{flex:1;padding:14px;border-radius:12px;border:2px solid #0A2342;background:#fff;font-weight:800;font-size:16px}
+.qn .primary{background:#0A2342;color:#fff}
+.mut{color:#6b7686;font-size:13px}
+#lb-refresh{padding:10px 14px;border-radius:10px;border:2px solid #0A2342;background:#fff;font-weight:800}
+.pod{border-radius:12px;padding:10px;margin:8px 0;background:#f8f4e8;border:1px solid #e0d5b8}
+.pod b{font-size:16px}
+.rank{display:flex;justify-content:space-between;background:#fff;border:1px solid #eee;border-radius:10px;padding:10px;margin:6px 0;font-size:14px}
+.rev{border:1px solid #eee;border-left:6px solid #999;border-radius:10px;padding:10px;margin:8px 0;background:#fff;font-size:14px}
+.rev.ok{border-left-color:green}.rev.no{border-left-color:red}
+footer{text-align:center;font-size:12px;color:#6b7686;padding:14px;margin-top:auto}

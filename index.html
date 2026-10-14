@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+<title>PULSE Quiz • Students' Day</title>
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<div class="phone">
+<header>
+  <img src="assets/logo.jpeg" alt="PULSE logo" />
+  <div><b>PULSE Science Club</b><small>UCE Ariyalur • Students' Day Quiz</small></div>
+  <button id="nav-board" type="button">🏆</button>
+</header>
+
+<!-- HOME -->
+<div id="view-home" class="view on">
+  <img class="poster" src="assets/poster.jpeg" alt="Students Day poster" />
+  <h1>World Students' Day Quiz</h1>
+  <p class="q">"Dream is not what you see in sleep, dream is what keeps you awake." — <b>Dr. Kalam</b></p>
+  <div class="info">📝 25 questions • 1 mark each • Total 25<br>⏱ 15 min timer • 1 attempt per Reg No</div>
+  <button class="big primary" id="btn-student" type="button">🎓 I am a Student</button>
+  <button class="big" id="btn-faculty" type="button">👩‍🏫 I am Faculty / Staff</button>
+  <button class="link" id="btn-board1" type="button">View leaderboard →</button>
+  <h3>🏆 Top 3</h3>
+  <div id="home-top3"><p class="mut">Loading…</p></div>
+</div>
+
+<!-- REGISTER -->
+<div id="view-register" class="view">
+  <button class="link" data-go="home" type="button">← Back</button>
+  <h2 id="reg-title">Student details</h2>
+  <p class="mut" id="reg-sub">No login needed.</p>
+  <label>Name *<input id="f-name" maxlength="80" placeholder="Your full name" autocomplete="name" /></label>
+  <label>Department *<select id="f-dept">
+    <option value="">Select…</option><option>CSE</option><option>ECE</option><option>EEE</option>
+    <option>MECH</option><option>CIVIL</option><option>AI &amp; DS</option><option>IT</option><option>Other</option>
+  </select></label>
+  <div id="year-wrap"><label>Year *<select id="f-year">
+    <option value="">Select…</option><option>I Year</option><option>II Year</option><option>III Year</option><option>IV Year</option>
+  </select></label></div>
+  <div id="reg-wrap"><label>Register Number *<input id="f-reg" maxlength="20" placeholder="e.g. 6234UCS001" /></label></div>
+  <p class="err" id="reg-err"></p>
+  <button class="big primary" id="reg-submit" type="button">Start Quiz →</button>
+</div>
+
+<!-- QUIZ -->
+<div id="view-quiz" class="view">
+  <div class="qbar"><span id="q-progress-text">Question 1 of 25</span><span id="q-timer">15:00</span></div>
+  <div class="track"><div id="q-bar"></div></div>
+  <p id="q-text" class="qq"></p>
+  <div id="q-opts"></div>
+  <div class="qn">
+    <button id="q-prev" type="button">← Back</button>
+    <button id="q-next" type="button" class="primary">Next →</button>
+  </div>
+  <button class="big primary" id="q-submit" type="button">Submit ✓</button>
+</div>
+
+<!-- RESULT -->
+<div id="view-result" class="view">
+  <h2 id="r-title">You scored 0 / 25</h2>
+  <p class="mut" id="r-sub"></p>
+  <div class="info">✔ Correct: <b id="r-correct">0/25</b> • ⏱ <b id="r-time">0:00</b></div>
+  <button class="big primary" id="btn-board2" type="button">🏆 Leaderboard</button>
+  <button class="big" data-go="home" type="button">Home</button>
+  <h3>Answers</h3>
+  <div id="r-review"></div>
+</div>
+
+<!-- BOARD -->
+<div id="view-leaderboard" class="view">
+  <button class="link" data-go="home" type="button">← Back</button>
+  <h2>🏆 Leaderboard</h2>
+  <p class="mut">Students only • Top 3 win • Same score? Faster finish ranks higher ⏱</p>
+  <button id="lb-refresh" type="button">↻ Refresh</button>
+  <span id="lb-count" class="mut"></span>
+  <div id="lb-podium"></div>
+  <div id="lb-list"></div>
+</div>
+
+<footer>PULSE • Explore • Experiment • Evolve</footer>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
