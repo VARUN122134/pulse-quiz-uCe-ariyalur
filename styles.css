@@ -36,7 +36,14 @@ input,select{display:block;width:100%;margin-top:6px;padding:14px;border-radius:
 #lb-refresh{padding:10px 14px;border-radius:10px;border:2px solid #0A2342;background:#fff;font-weight:800}
 .pod{border-radius:12px;padding:10px;margin:8px 0;background:#f8f4e8;border:1px solid #e0d5b8}
 .pod b{font-size:16px}
-.rank{display:flex;justify-content:space-between;background:#fff;border:1px solid #eee;border-radius:10px;padding:10px;margin:6px 0;font-size:14px}
-.rev{border:1px solid #eee;border-left:6px solid #999;border-radius:10px;padding:10px;margin:8px 0;background:#fff;font-size:14px}
+.rank{display:flex;justify-content:space-between;background:#fff;border:1px solid #eee;border-radius:10px;padding:10px;margin:6px 0;font-size:14px}.rev{border:1px solid #eee;border-left:6px solid #999;border-radius:10px;padding:10px;margin:8px 0;background:#fff;font-size:14px}
 .rev.ok{border-left-color:green}.rev.no{border-left-color:red}
 footer{text-align:center;font-size:12px;color:#6b7686;padding:14px;margin-top:auto}
+.about{display:flex;gap:12px;background:#fff;border:1px solid #e0d5b8;border-radius:16px;padding:14px;margin-top:18px;align-items:center}
+.about-photo{width:76px;height:76px;border-radius:50%;object-fit:cover;border:3px solid #C9973B;flex-shrink:0;background:#eee}
+.about-body{display:flex;flex-direction:column;gap:4px;min-width:0}
+.about-body b{font-size:17px;color:#0A2342}
+.about-body small{font-size:12px;color:#6b7686}
+.about-contact{font-size:13px;font-weight:700;color:#0A2342}
+.about-btns{display:flex;gap:8px;margin-top:6px}
+.abtn{flex:1;text-align:center;text-decoration:none;font-weight:800;font-size:14px;padding:10px;border-radius:10px;background:#0A2342;color:#fff}
