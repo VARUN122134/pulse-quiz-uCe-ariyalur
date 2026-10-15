@@ -78,7 +78,7 @@ function controlMsg(s) {
   if (s === "live") return null;
   if (s === "waiting") return "⏳ Quiz not started yet — wait for the coordinator.";
   if (s === "paused") return "⏸ Quiz is paused by the coordinator — wait...";
-  return "⏹ Quiz has ended — see the leaderboard.";
+  return "⏹ Quiz has ended — results will be announced by the coordinator.";
 }
 function paintControl() {
   var el = $("control-line");
@@ -100,17 +100,15 @@ function enforceControl() {
 }
 
 function go(v) {
-  var vs = ["home", "register", "quiz", "result", "leaderboard"];
+  var vs = ["home", "register", "quiz", "result"];
   for (var i = 0; i < vs.length; i++) $("view-" + vs[i]).classList.toggle("on", vs[i] === v);
   window.scrollTo(0, 0);
-  if (v === "leaderboard") loadBoard();
-  if (v === "home") loadTop3();
 }
 
 function openReg(r) {
   role = r;
   $("reg-title").textContent = r === "student" ? "Student details" : "Faculty details";
-  $("reg-sub").textContent = r === "student" ? "You will be ranked on the leaderboard." : "Faculty: not ranked, no prize.";
+  $("reg-sub").textContent = r === "student" ? "Winners announced by the coordinator." : "Faculty: not ranked, no prize.";
   $("year-wrap").style.display = r === "student" ? "" : "none";
   $("reg-wrap").style.display = r === "student" ? "" : "none";
   $("reg-err").textContent = "";
@@ -200,90 +198,12 @@ function showResult(correct, score, taken, auto) {
   });
 }
 
-function medal(i) { return i === 0 ? "🥇" : i === 1 ? "🥈" : "🥉"; }
-
-// Sort: score DESC, then time DESC (slower finisher wins ties), null times last.
-function sortBoard(data) {
-  return (data || []).slice().sort(function (x, y) {
-    if (y.score !== x.score) return y.score - x.score;
-    var xt = (x.time_taken_secs == null ? -1 : x.time_taken_secs);
-    var yt = (y.time_taken_secs == null ? -1 : y.time_taken_secs);
-    return yt - xt;
-  });
-}
-// Tie-aware rank: same score + same time => same rank number.
-function rankOf(sorted, i) {
-  if (i === 0) return 1;
-  var p = sorted[i - 1], c = sorted[i];
-  if (p.score === c.score && (p.time_taken_secs || 0) === (c.time_taken_secs || 0)) return rankOf(sorted, i - 1);
-  return i + 1;
-}
-
-function timeStr(r) {
-  if (r.time_taken_secs == null) return "—";
-  return fmt(r.time_taken_secs);
-}
-
-function boardRows(data, el, full) {
-  el.innerHTML = "";
-  if (!data.length) { el.innerHTML = '<p class="mut">No attempts yet — be the first!</p>'; return; }
-  var sorted = sortBoard(data);
-  sorted.slice(0, full ? sorted.length : 3).forEach(function (r, i) {
-    var rk = full ? rankOf(sorted, i) : (i + 1);
-    var d = document.createElement("div");
-    d.className = full ? "rank" : "pod";
-    d.innerHTML = full
-      ? "<span>" + rk + ". <b>" + esc(r.name) + "</b> <small class='mut'>" + esc(r.dept) + " • ⏱ " + timeStr(r) + "</small></span><b>" + r.score + " / " + TOTAL + "</b>"
-      : medal(i) + " <b>" + esc(r.name) + "</b> (" + esc(r.dept) + ") — <b>" + r.score + " / " + TOTAL + "</b> <small class='mut'>⏱ " + timeStr(r) + "</small>";
-    el.appendChild(d);
-  });
-}
-
-function loadTop3() {
-  var el = $("home-top3");
-  if (!sb) {
-    var local = [];
-    try { local = JSON.parse(localStorage.getItem("quiz_local_board") || "[]"); } catch (e) {}
-    boardRows(sortBoard(local).slice(0, 3), el, false);
-    if (!local.length) el.innerHTML = '<p class="mut">Offline mode — scores save on this phone only.</p>';
-    return;
-  }
-  sb.from("quiz_attempts").select("name,dept,score,time_taken_secs").eq("role", "student").order("score", { ascending: false }).order("time_taken_secs", { ascending: false, nullsFirst: false }).order("created_at", { ascending: true }).limit(3)
-    .then(function (res) {
-      if (res.error) { el.innerHTML = '<p class="mut">Offline — check internet.</p>'; return; }
-      boardRows(res.data || [], el, false);
-    });
-}
-
-function loadBoard() {
-  var pod = $("lb-podium"), list = $("lb-list");
-  pod.innerHTML = '<p class="mut">Loading…</p>'; list.innerHTML = "";
-  $("lb-count").textContent = "";
-  if (!sb) {
-    var local = [];
-    try { local = JSON.parse(localStorage.getItem("quiz_local_board") || "[]"); } catch (e) {}
-    $("lb-count").textContent = "Offline: " + local.length + " on this phone";
-    boardRows(local, pod, false); boardRows(local, list, true);
-    return;
-  }
-  sb.from("quiz_attempts").select("name,dept,year,reg_number,score,time_taken_secs,created_at").eq("role", "student").order("score", { ascending: false }).order("time_taken_secs", { ascending: false, nullsFirst: false }).order("created_at", { ascending: true }).limit(100)
-    .then(function (res) {
-      if (res.error) { pod.innerHTML = '<p class="mut">Failed: ' + esc(res.error.message) + "</p>"; return; }
-      var data = res.data || [];
-      $("lb-count").textContent = data.length + " student(s)";
-      boardRows(data, pod, false); boardRows(data, list, true);
-    });
-}
-
+// Public leaderboard removed — viewers see no scores. Host views results on admin page.
 // wire buttons AFTER DOM ready — plain onclick so nothing can silently die
 document.addEventListener("DOMContentLoaded", function () {
   document.querySelectorAll("[data-go]").forEach(function (b) { b.onclick = function () { go(b.getAttribute("data-go")); }; });
   $("btn-student").onclick = function () { openReg("student"); };
   $("btn-faculty").onclick = function () { openReg("faculty"); };
-  $("btn-board1").onclick = function () { go("leaderboard"); };
-  $("btn-board2").onclick = function () { go("leaderboard"); };
-  $("nav-board").onclick = function () { go("leaderboard"); };
-  $("lb-refresh").onclick = loadBoard;
 
   $("reg-submit").onclick = function () {
     var err = $("reg-err");
@@ -331,7 +251,6 @@ document.addEventListener("DOMContentLoaded", function () {
     origShow(correct, score, taken, auto);
   };
 
-  loadTop3();
   fetchControl();
   setInterval(fetchControl, 10000);
 });

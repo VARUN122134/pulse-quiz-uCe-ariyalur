@@ -11,7 +11,6 @@
 <header>
   <img src="assets/logo.jpeg" alt="PULSE logo" />
   <div><b>PULSE Science Club</b><small>UCE Ariyalur • Students' Day Quiz</small></div>
-  <button id="nav-board" type="button">🏆</button>
 </header>
 
 <!-- HOME -->
@@ -23,9 +22,7 @@
   <p class="mut" id="control-line"></p>
   <button class="big primary" id="btn-student" type="button">🎓 I am a Student</button>
   <button class="big" id="btn-faculty" type="button">👩‍🏫 I am Faculty / Staff</button>
-  <button class="link" id="btn-board1" type="button">View leaderboard →</button>
-  <h3>🏆 Top 3</h3>
-  <div id="home-top3"><p class="mut">Loading…</p></div>
+  <div class="info">🏆 Winners will be announced by the coordinator. Scoreboard is hidden.</div>
 
   <div class="about">
     <img class="about-photo" src="assets/varun.jpg" alt="Varun C" />
@@ -79,22 +76,12 @@
   <h2 id="r-title">You scored 0 / 25</h2>
   <p class="mut" id="r-sub"></p>
   <div class="info">✔ Correct: <b id="r-correct">0/25</b> • ⏱ <b id="r-time">0:00</b></div>
-  <button class="big primary" id="btn-board2" type="button">🏆 Leaderboard</button>
-  <button class="big" data-go="home" type="button">Home</button>
+  <button class="big primary" data-go="home" type="button">Home</button>
   <h3>Answers</h3>
   <div id="r-review"></div>
 </div>
 
-<!-- BOARD -->
-<div id="view-leaderboard" class="view">
-  <button class="link" data-go="home" type="button">← Back</button>
-  <h2>🏆 Leaderboard</h2>
-  <p class="mut">Students only • Top 3 win • Same score? Slower finish ranks higher ⏱</p>
-  <button id="lb-refresh" type="button">↻ Refresh</button>
-  <span id="lb-count" class="mut"></span>
-  <div id="lb-podium"></div>
-  <div id="lb-list"></div>
-</div>
+<!-- LEADERBOARD HIDDEN FROM VIEWERS — host sees results on admin page -->
 
 <footer>PULSE • Explore • Experiment • Evolve</footer>
 </div>

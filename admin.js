@@ -31,6 +31,24 @@ function refresh() {
       if (!res.error) $("ct-" + r).textContent = res.count;
     });
   });
+  // Secret student board — host only (public site shows no scores).
+  sb.from("quiz_attempts").select("name,dept,year,reg_number,score,time_taken_secs,created_at").eq("role", "student").order("score", { ascending: false }).order("time_taken_secs", { ascending: false, nullsFirst: false }).order("created_at", { ascending: true }).limit(200).then(function (res) {
+    var el = $("stu-list");
+    if (res.error) { el.innerHTML = '<p class="mut">Failed: ' + res.error.message + "</p>"; return; }
+    var data = res.data || [];
+    if (!data.length) { el.innerHTML = '<p class="mut">No student attempts yet.</p>'; return; }
+    el.innerHTML = "";
+    var prev = null, rank = 0;
+    data.forEach(function (r, i) {
+      if (!prev || prev.score !== r.score || (prev.time_taken_secs || 0) !== (r.time_taken_secs || 0)) rank = i + 1;
+      prev = r;
+      var t = r.time_taken_secs == null ? "—" : Math.floor(r.time_taken_secs / 60) + ":" + String(r.time_taken_secs % 60).padStart(2, "0");
+      var d = document.createElement("div");
+      d.className = "rank";
+      d.textContent = rank + ". " + r.name + " (" + r.dept + "/" + (r.year || "-") + ", " + (r.reg_number || "-") + ") — " + r.score + " / 25 • ⏱ " + t;
+      el.appendChild(d);
+    });
+  });
   // Secret faculty scores — host only, never rendered on the public site.
   sb.from("quiz_attempts").select("name,dept,score,time_taken_secs,created_at").eq("role", "faculty").order("score", { ascending: false }).order("time_taken_secs", { ascending: false, nullsFirst: false }).limit(100).then(function (res) {
     var el = $("fac-list");
